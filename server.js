@@ -1,14 +1,26 @@
 const express = require('express');
-const app = express();
-const cors = require('cors');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
+const db = mongoose.connection;
 const Movie = require('./models/Movie')
+require('dotenv').config()
 
-app.use(express.json());
+const PORT = process.env.PORT
+
+const MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI)
+
+app.use(express.static('public'));
 app.use(cors());
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-
+app.get('/' , (req, res) => {
+    res.send('Hello World!');
+  });
 
 app.post('/reel', (req,res) =>{
     Movie.create(req.body)
@@ -40,12 +52,4 @@ app.put('/reels/:id', (req, res) =>{
 })
 
 
-app.listen(3000, ()=>{
-    console.log('listening...');
-});
-
-
-mongoose.connect('mongodb://localhost:27017/reels')
-mongoose.connection.once('open', ()=>{
-    console.log('connected to mongod...');
-});
+app.listen(PORT, () => console.log( 'Listening on port:', PORT));
