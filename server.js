@@ -22,7 +22,7 @@ app.get('/' , (req, res) => {
     res.send('Hello World!');
   });
 
-app.post('/reel', (req,res) =>{
+app.post('/reels', (req,res) =>{
     Movie.create(req.body)
     .then((createdMovie) =>{
         res.json(createdMovie)

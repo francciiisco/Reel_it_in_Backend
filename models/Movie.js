@@ -4,8 +4,7 @@ const movieSchema = new mongoose.Schema({
     name: String,
     review: String,
     image: String,
-    ytlink: String,
-    rating: Number
+    rating: String,
 });
 
 const Movie = mongoose.model('Movie', movieSchema);
